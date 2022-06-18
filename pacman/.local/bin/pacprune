@@ -1,0 +1,6 @@
+#!/bin/sh
+
+repo_file="$DOTFILES/pkglist.txt"
+aur_file="$DOTFILES/pkglist-aur.txt"
+
+sudo pacman -Rsu $(comm -23 <(pacman -Qq | sort) <(sort $repo_file $aur_file))

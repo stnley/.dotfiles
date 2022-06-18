@@ -1,0 +1,10 @@
+#!/bin/sh
+
+aur_file="$DOTFILES/pkglist-aur.txt"
+repo_file="$DOTFILES/pkglist.txt"
+
+echo "Saving package list to $repo_file"
+comm -23 <(pacman -Qqe | sort) <(pacman -Qqm | sort) >$repo_file
+
+echo "Saving aur package list to $aur_file"
+pacman -Qqm >$aur_file

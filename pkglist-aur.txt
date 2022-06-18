@@ -1,0 +1,10 @@
+i3lock-color
+jdtls
+postman-bin
+sct
+slack-desktop
+spotify
+terraform-ls
+whatmask
+yay
+zoom

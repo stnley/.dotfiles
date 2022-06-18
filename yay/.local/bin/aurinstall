@@ -1,0 +1,5 @@
+# !/bin/sh
+
+save_file="$DOTFILES/pkglist-aur.txt"
+
+yay -S --needed -a - < $save_file
