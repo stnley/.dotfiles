@@ -4,7 +4,22 @@
 #
 # Add directories to the lists below as needed.
 
-user_stow_folders=(bin)
+user_stow_folders=(
+	bin 
+	dircolors 
+	lsd 
+	npm 
+	personal 
+	powerline 
+	python 
+	ranger 
+	terraform 
+	themes 
+	tmux 
+	vim 
+	zathura 
+	zsh
+)
 
 root_stow_folders=()
 
