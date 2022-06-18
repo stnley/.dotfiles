@@ -5,23 +5,30 @@
 # Add directories to the lists below as needed.
 
 user_stow_folders=(
+	alacritty
+	apt
 	bin 
 	dircolors 
+	fonts
+	i3
 	lsd 
 	npm 
 	personal 
 	powerline 
 	python 
 	ranger 
+	systemd
 	terraform 
 	themes 
 	tmux 
+	user-dirs
 	vim 
+	X11
 	zathura 
 	zsh
 )
 
-root_stow_folders=()
+root_stow_folders=(etc usr)
 
 usage() (
 	echo "Usage: install [<option>]
