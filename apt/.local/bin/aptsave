@@ -1,0 +1,6 @@
+#!/bin/sh
+
+repo_file="$DOTFILES/pkglist.txt"
+
+echo "Saving package list to $repo_file"
+apt-mark showmanual >$repo_file
