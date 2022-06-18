@@ -1,0 +1,175 @@
+#!/usr/bin/env zsh
+
+set -e
+
+# node
+nvm_dir_set() {
+    if [ -z $NVM_DIR ]; then
+        echo "Make sure '$NVM_DIR' is set"
+        exit 1
+    fi
+}
+
+install_nvm() {
+    if [ -s "$NVM_DIR/nvm.sh" ]; then
+        echo "nvm is already installed."
+    else
+	echo "installing nvm..."
+        git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+    fi
+}
+
+update_nvm() {
+    (
+	echo "updating nvm..."
+        cd "$NVM_DIR"
+        git fetch --tags origin
+        git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+    ) && \. "$NVM_DIR/nvm.sh"
+}
+
+nvm_dir_set && install_nvm && update_nvm
+
+# rust
+rustup_dir_set() {
+    if [ -z $RUSTUP_HOME ]; then
+        echo "Make sure '$RUSTUP_HOME' is set"
+        exit 1
+    fi
+}
+
+cargo_dir_set() {
+    if [ -z $CARGO_HOME ]; then
+        echo "Make sure '$CARGO_HOME' is set"
+        exit 1
+    fi
+}
+
+install_rust() {
+    if [ -x "$(command -v cargo)" ]; then
+	    echo "rust is already installed."
+    else
+	    echo "installing rust..."
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    fi
+}
+
+rustup_dir_set && cargo_dir_set && install_rust
+
+# golang
+GOLANG_VERSION="1.18.1"
+
+go_dir_set() {
+    if [ -z $GOROOT ]; then
+        echo "Make sure '$GOROOT' is set"
+        exit 1
+    fi
+}
+
+check_go_version() {
+    if [ -x "$(command -v go)" ] &&
+        [ $(go version | awk '/go/ {print $3}') = "go$GOLANG_VERSION" ]; then
+	    echo 0
+    else
+        echo 1
+    fi
+}
+
+clean_old_go_version() {
+    echo "removing old go install..."
+    rm -rf "$GOROOT"
+}
+
+download_go() {
+    echo "downloading go version $GOLANG_VERSION..."
+    curl -L "https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz" -o "/tmp/go$GOLANG_VERSION.linux-amd64.tar.gz"
+}
+
+extract_go() {
+    echo "installing go..."
+    tar -C $(dirname "$GOROOT") -xzf "/tmp/go$GOLANG_VERSION.linux-amd64.tar.gz"
+    rm -rf "/tmp/go$GOLANG_VERSION.linux-amd64.tar.gz"
+}
+
+install_go() {
+    if  [ $(check_go_version) -eq 1 ]; then
+	    echo "hrereeere"
+	clean_old_go_version
+        download_go
+        extract_go
+        if [ $(check_go_version) -eq 1 ]; then
+        	echo "something went wrong!"
+        	exit 1
+        fi
+	go version
+    else
+	echo "go is up to date!"
+    fi
+}
+
+go_dir_set && install_go
+
+# nvim stuff
+
+# language servers, formatters, linters
+npm install -g \
+    tree-sitter-cli \
+    typescript \
+    typescript-language-server \
+    pyright \
+    emmet-ls \
+    vscode-langservers-extracted \
+    prettier \
+    dockerfile-language-server-nodejs \
+    bash-language-server \
+    yaml-language-server
+
+go install "mvdan.cc/sh/v3/cmd/shfmt@latest"
+go install "github.com/mattn/efm-langserver@latest"
+
+cargo install \
+    stylua
+
+# sumneko
+LUA_LS_INSTALL_DIR="$HOME/apps/lua-language-server"
+
+clone_lua_lang_server() {
+    git clone https://github.com/sumneko/lua-language-server $LUA_LS_INSTALL_DIR
+}
+
+update_lua_lang_server() {
+    cd $LUA_LS_INSTALL_DIR
+    git submodule update --init --recursive
+    git fetch --all --tags &&
+	    git checkout `git describe --abbrev=0 --tags --match "[0-9]*" $(git rev-list --tags --max-count=1)`
+}
+
+build_lua_lang_server() {
+    cd $LUA_LS_INSTALL_DIR
+    cd 3rd/luamake
+    ./compile/install.sh
+    cd ../..
+    ./3rd/luamake/luamake rebuild
+}
+
+verify_lua_lang_server() {
+    if ! [ -x "$LUA_LS_INSTALL_DIR/bin/lua-language-server" ]; then
+        echo "something went wrong!"
+	exit 1
+    fi
+    echo "lua language server installed!"
+}
+
+install_lua_lang_server() {
+    if ! [ -d $LUA_LS_INSTALL_DIR ]; then
+        if ! [ -d $(dirname "$LUA_LS_INSTALL_DIR") ]; then
+            mkdir $(dirname "$LUA_LS_INSTALL_DIR")
+        fi
+	clone_lua_lang_server
+    fi
+
+    update_lua_lang_server && build_lua_lang_server
+    verify_lua_lang_server
+}
+
+install_lua_lang_server

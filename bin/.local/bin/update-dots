@@ -1,0 +1,54 @@
+#!/usr/bin/env zsh
+#
+# Use GNU Stow to manage symlinks for dotfiles.
+#
+# Add directories to the lists below as needed.
+
+user_stow_folders=(bin)
+
+root_stow_folders=()
+
+usage() (
+	echo "Usage: install [<option>]
+default:
+  <no option>   link all dotfiles
+options:
+  -D            unlink all dotfiles
+  -h            show this message, then exit
+"
+)
+
+stow_option=""
+main() (
+    pushd $DOTFILES
+    for folder in $user_stow_folders; do
+        stow -v $stow_option $folder
+    done
+    # TODO root stow folders
+    pushd $DOTFILES/root
+    for folder in $root_stow_folders; do
+        sudo stow -v --target=/ $stow_option $folder
+    done
+    popd
+    popd
+)
+
+while getopts ":Dh" opt; do
+	case $opt in
+	D)
+		stow_option="-D"
+		;;
+	h)
+		usage
+		exit 0
+		;;
+	*)
+		printf "$(basename "$0"): invalid option: -%s\n" "$OPTARG" >&2
+		printf "Try '$(basename "$0") --help' for more information.\n\n" >&2
+		usage >&2
+		exit 1
+		;;
+	esac
+done
+
+main
