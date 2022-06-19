@@ -90,3 +90,5 @@ fi
 # node
 #-----------------------
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+
+alias luamake=/home/stnley/apps/lua-language-server/3rd/luamake/luamake

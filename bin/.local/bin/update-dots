@@ -7,28 +7,27 @@
 user_stow_folders=(
 	alacritty
 	apt
-	bin 
-	dircolors 
+	bin
+	dircolors
 	fonts
 	i3
-	lsd 
-	npm 
-	personal 
-	powerline 
-	python 
-	ranger 
+	lsd
+	npm
+	nvim
+	personal
+	powerline
+	python
+	ranger
 	systemd
-	terraform 
-	themes 
-	tmux 
+	terraform
+	themes
+	tmux
 	user-dirs
-	vim 
+	vim
 	X11
-	zathura 
+	zathura
 	zsh
 )
-
-root_stow_folders=(etc usr)
 
 usage() (
 	echo "Usage: install [<option>]
@@ -43,15 +42,15 @@ options:
 stow_option=""
 main() (
     pushd $DOTFILES
+
     for folder in $user_stow_folders; do
         stow -v $stow_option $folder
     done
-    # TODO root stow folders
-    pushd $DOTFILES/root
+
     for folder in $root_stow_folders; do
-        sudo stow -v --target=/ $stow_option $folder
+        sudo stow -v -n -t / $stow_option $folder
     done
-    popd
+
     popd
 )
 
