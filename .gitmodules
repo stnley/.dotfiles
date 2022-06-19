@@ -4,3 +4,6 @@
 [submodule "zsh/.config/zsh/prompt"]
 	path = zsh/.config/zsh/prompt
 	url = https://github.com/sindresorhus/pure.git
+[submodule "zsh/.config/zsh/zsh-autosuggestions"]
+	path = zsh/.config/zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
