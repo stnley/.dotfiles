@@ -47,9 +47,7 @@ main() (
         stow -v $stow_option $folder
     done
 
-    for folder in $root_stow_folders; do
-        sudo stow -v -n -t / $stow_option $folder
-    done
+    sudo stow -v -t / $stow_option root
 
     popd
 )
