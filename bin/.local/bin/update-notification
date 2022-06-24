@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if ! [ $(command -v checkupdates) ]; then
+	echo "pacman-contrib not installed"
+	exit 1
+fi
+
+num_updates=$(checkupdates | wc -l)
+
+if [ $num_updates -gt 0 ]; then
+	notify-send -u normal "$num_updates updates available"
+fi
