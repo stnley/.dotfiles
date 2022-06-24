@@ -171,6 +171,9 @@ bindsym $mod+F9 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ togg
 # scratchpad
 bindsym $mod+Shift+y [class="KeePassXC"] scratchpad show
 
+# reload display layout
+bindsym $sup+R exec --no-startup-id autorandr
+
 
 #-----------------------
 # application workspaces
