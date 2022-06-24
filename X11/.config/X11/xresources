@@ -32,4 +32,4 @@ xterm.vt100.translations: #override \
     Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
     Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
 
-Xft.dpi: 144
+Xft.dpi: 96
