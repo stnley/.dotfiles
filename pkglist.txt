@@ -58,6 +58,8 @@ noto-fonts-emoji
 noto-fonts-extra
 ntfs-3g
 ntp
+nvidia
+nvidia-settings
 pacman-contrib
 patch
 perl-anyevent-i3
