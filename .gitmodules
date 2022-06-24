@@ -7,3 +7,9 @@
 [submodule "zsh/.config/zsh/zsh-autosuggestions"]
 	path = zsh/.config/zsh/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
+[submodule "themes/.themes/Dracula"]
+	path = themes/.themes/Dracula
+	url = https://github.com/dracula/gtk.git
+[submodule "themes/.icons/Dracula"]
+	path = themes/.icons/Dracula
+	url = https://github.com/m4thewz/dracula-icons.git
