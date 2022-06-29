@@ -12,6 +12,7 @@ cmake
 discord
 dmenu
 docker
+docker-compose
 efibootmgr
 fakeroot
 feh
