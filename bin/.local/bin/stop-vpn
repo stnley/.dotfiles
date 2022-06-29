@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# originally posted in https://github.com/davatorium/rofi/issues/584
+
+sudo tailscale down && sudo -A systemctl stop tailscaled.service
