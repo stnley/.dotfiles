@@ -1,31 +1,9 @@
--- local black = require "stnley.lsp.efm.black"
--- local flake8 = require "stnley.lsp.efm.flake8"
--- local isort = require "stnley.lsp.efm.isort"
--- local mypy = require "stnley.lsp.efm.mypy"
--- local prettier = require "stnley.lsp.efm.prettier"
--- local shellcheck = require "stnley.lsp.efm.shellcheck"
--- local shfmt = require "stnley.lsp.efm.shfmt"
--- local stylua = require "stnley.lsp.efm.stylua"
--- local terraform = require "stnley.lsp.efm.terraform"
-
--- return {
---   lua = { stylua },
---   json = { prettier },
---   python = { black, isort, flake8, mypy },
---   sh = { shellcheck, shfmt },
---   terraform = { terraform },
---   yaml = { prettier },
--- }
---
---
 local M = {}
 
 local stylua = {
   formatCommand = "stylua -",
   formatStdin = true,
 }
-
-M.lua = { stylua }
 
 local black = {
   formatCommand = "black --target-version py310 -",
@@ -55,8 +33,6 @@ local mypy = {
   lintSource = "mypy",
 }
 
-M.python = { black, isort, flake8, mypy }
-
 local shellcheck = {
   lintCommand = "shellcheck -f gcc -x -",
   lintStdin = true,
@@ -68,14 +44,10 @@ local shfmt = {
   formatCommand = "shfmt ${-i:tabWidth}",
 }
 
-M.sh = { shellcheck, shfmt }
-
 local terraform = {
   formatCommand = "terraform fmt -",
   formatStdin = true,
 }
-
-M.terraform = { terraform }
 
 local prettier = {
   formatCommand = ([[
@@ -87,7 +59,10 @@ local prettier = {
 }
 
 M.json = { prettier }
-
+M.lua = { stylua }
+M.python = { black, isort, flake8, mypy }
+M.sh = { shellcheck, shfmt }
+M.terraform = { terraform }
 M.yaml = { prettier }
 
 return M
