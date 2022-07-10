@@ -13,6 +13,7 @@ discord
 dmenu
 docker
 docker-compose
+dunst
 efibootmgr
 fakeroot
 feh
@@ -73,6 +74,8 @@ pacman-contrib
 patch
 perl-anyevent-i3
 pkgconf
+polkit
+polkit-gnome
 postgresql-libs
 powerline
 protobuf
