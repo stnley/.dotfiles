@@ -45,9 +45,13 @@ local_telescope.setup {
       "--smart-case",
     },
   },
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {},
+    },
+  },
 }
 
--- _ = require("telescope").load_extension "file_browser"
--- _ = require("telescope").load_extension "fzf"
 _ = local_telescope.load_extension "file_browser"
 _ = local_telescope.load_extension "fzf"
+_ = local_telescope.load_extension "ui-select"

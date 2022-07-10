@@ -6,7 +6,7 @@ local stylua = {
 }
 
 local black = {
-  formatCommand = "black --target-version py310 -",
+  formatCommand = "black -",
   formatStdin = true,
 }
 

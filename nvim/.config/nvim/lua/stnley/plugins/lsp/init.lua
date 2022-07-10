@@ -73,7 +73,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.bashls.setup {
   on_init = custom_init,
   on_attach = function(client, bufnr)
-    format_on_save(client, bufnr)
     custom_attach(client)
   end,
   capabilities = capabilities,

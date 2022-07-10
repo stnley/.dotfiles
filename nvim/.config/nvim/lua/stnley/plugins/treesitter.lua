@@ -4,10 +4,8 @@ if not has_treesitter then
   return
 end
 
--- if local_treesitter then
 require("nvim-treesitter.configs").setup {
   ensure_installed = {
-
     "bash",
     "c",
     "c_sharp",
@@ -45,4 +43,3 @@ require("nvim-treesitter.configs").setup {
     disable = { "json" },
   },
 }
--- end

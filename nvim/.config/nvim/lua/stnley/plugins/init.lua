@@ -1,17 +1,30 @@
-return require("packer").startup {
+local has_packer, local_packer = pcall(require, "packer")
+
+if not has_packer then
+  return
+end
+
+return local_packer.startup {
   function(use)
-    use "wbthomason/packer.nvim"
+    use { "wbthomason/packer.nvim" }
 
     use { "dracula/vim", as = "dracula" }
 
-    --    use { "chriskempson/base16-vim" }
-
     use {
-      "nvim-treesitter/nvim-treesitter",
-      config = function()
-        require "stnley.plugins.treesitter"
-      end,
-      run = ":TSUpdate",
+      {
+        "nvim-treesitter/nvim-treesitter",
+        config = function()
+          require "stnley.plugins.treesitter"
+        end,
+        run = ":TSUpdate",
+      },
+      {
+        "nvim-treesitter/nvim-treesitter-context",
+        config = function()
+          require("treesitter-context").setup {}
+        end,
+        event = "InsertEnter",
+      },
     }
 
     use {
@@ -31,6 +44,7 @@ return require("packer").startup {
         { "kyazdani42/nvim-web-devicons", opt = true },
         { "nvim-telescope/telescope-file-browser.nvim" },
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+        { "nvim-telescope/telescope-ui-select.nvim" },
       },
       config = function()
         require "stnley.plugins.telescope"
@@ -44,6 +58,7 @@ return require("packer").startup {
       requires = {
         { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
         { "hrsh7th/cmp-nvim-lsp-document-symbol" },
+        { "hrsh7th/cmp-nvim-lsp-signature-help" },
         { "hrsh7th/cmp-buffer" },
         { "hrsh7th/cmp-path" },
         { "saadparwaiz1/cmp_luasnip", requires = "L3MON4D3/LuaSnip" },
@@ -61,16 +76,17 @@ return require("packer").startup {
         require("trouble").setup {}
       end,
       cmd = "Trouble",
+      module = "trouble",
     }
 
-    --  use {
-    --    "akinsho/toggleterm.nvim",
-    --    config = function()
-    --      require "stnley.config.toggleterm"
-    --    end,
-    --    -- cmd = "ToggleTerm",
-    --    event = "BufRead",
-    --  }
+    use {
+      "akinsho/toggleterm.nvim",
+      config = function()
+        require "stnley.plugins.toggleterm"
+      end,
+      -- cmd = "ToggleTerm",
+      event = "BufRead",
+    }
 
     use {
       "tpope/vim-fugitive",
@@ -80,11 +96,29 @@ return require("packer").startup {
     use { "tpope/vim-commentary" }
 
     use {
+      "phaazon/hop.nvim",
+      branch = "v2",
+      config = function()
+        require "stnley.plugins.hop"
+      end,
+      module = "hop",
+    }
+
+    use {
       "folke/zen-mode.nvim",
       config = function()
         require("zen-mode").setup {}
       end,
       module = "zen-mode",
+    }
+
+    use {
+      "folke/todo-comments.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require("todo-comments").setup {}
+      end,
+      event = "BufRead",
     }
 
     use {
