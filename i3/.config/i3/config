@@ -142,9 +142,11 @@ bar {
 #-----------------------
 # startup
 #-----------------------
+exec --no-startup-id dunst
 exec --no-startup-id nm-applet
 exec --no-startup-id nextcloud &
 exec --no-startup-id blueman-applet
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id feh --no-fehbg --bg-fill ~/personal/pictures/backgrounds/rainbow.png
 exec keepassxc
 exec spotify
@@ -167,6 +169,10 @@ bindsym $mod+F12 exec --no-startup-id change-volume up
 bindsym $mod+F11 exec --no-startup-id change-volume down
 bindsym $mod+F10 exec --no-startup-id change-volume mute
 bindsym $mod+F9 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# brightness control
+bindsym XF86MonBrightnessUp exec --no-startup-id change-brightness up
+bindsym XF86MonBrightnessDown exec --no-startup-id change-brightness down
 
 # scratchpad
 bindsym $mod+Shift+y [class="KeePassXC"] scratchpad show

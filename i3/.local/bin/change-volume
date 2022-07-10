@@ -3,7 +3,7 @@
 # adapted from https://github.com/mohabaks
 
 # return mute as boolean
-function get_mute() {
+function muted() {
 	percentage=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '/Mute/ {print $2; exit}')
 	case $percentage in
 	no)
@@ -16,22 +16,25 @@ function get_mute() {
 }
 
 # return volume as number (no percent sign)
-function get_volume() {
+function volume() {
 	percentage=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume/ {print $5; exit}')
 	echo ${percentage%\%}
 }
 
 function send_notification {
 	verb=$1
-	volume=$(get_volume)
-	echo $volume
+    if [ $verb = "muted" ]; then
+        volume=0
+    else
+	    volume=$(volume)
+    fi
 	notify-send \
 		-u low \
 		-t 1500 \
 		-h string:x-canonical-private-synchronous:change-volume \
 		-h int:value:"$volume" \
 		-h string:hlcolor:#50fa7b \
-		"Volume $verb."
+        "Volume $verb. ($volume)"
 }
 
 case $1 in
@@ -45,9 +48,9 @@ down)
 	;;
 mute)
 	pactl set-sink-mute @DEFAULT_SINK@ toggle
-	if [ $(get_mute) -eq 0 ]; then
+	if [ $(muted) -eq 0 ]; then
 		send_notification unmuted
-	elif [ $(get_mute) -eq 1 ]; then
+	elif [ $(muted) -eq 1 ]; then
 		send_notification muted
 	fi
 	;;
