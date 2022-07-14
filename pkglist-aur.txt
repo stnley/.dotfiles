@@ -12,6 +12,7 @@ system76-driver
 system76-firmware
 system76-firmware-daemon
 system76-power
+teams
 terraform-ls
 whatmask
 yay

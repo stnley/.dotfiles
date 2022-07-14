@@ -147,6 +147,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id nextcloud &
 exec --no-startup-id blueman-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id xss-lock -- lock
 exec_always --no-startup-id feh --no-fehbg --bg-fill ~/personal/pictures/backgrounds/rainbow.png
 exec keepassxc
 exec spotify
@@ -178,7 +179,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id change-brightness down
 bindsym $mod+Shift+y [class="KeePassXC"] scratchpad show
 
 # reload display layout
-bindsym $sup+R exec --no-startup-id autorandr
+bindsym $sup+R exec --no-startup-id autorandr --cycle
 
 
 #-----------------------

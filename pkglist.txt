@@ -115,6 +115,7 @@ xorg-xinit
 xorg-xprop
 xorg-xrandr
 xorg-xrdb
+xss-lock
 xterm
 zathura
 zathura-pdf-mupdf
