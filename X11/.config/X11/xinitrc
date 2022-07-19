@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# workaround for nvidia driver
+xrandr --auto
+
 userresources=$XDG_CONFIG_HOME/X11/xresources
 
 # merge in defaults and keymaps
@@ -21,5 +24,7 @@ fi
 
 eval $(gnome-keyring-daemon --start --components=secrets,ssh)
 export SSH_AUTH_SOCK
-udiskie --smart-tray &
+
+autorandr --load docked-nvidia
+
 exec i3
